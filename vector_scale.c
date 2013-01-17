@@ -13,6 +13,10 @@
     */
 void scale_vector(double a[], double b[], double scale)
 {
+	int i; // Not sure if we're compiling to the C99 standard...
+	for(i=0; i<VECTOR_LENGTH; i++) {
+		b[i] = scale * a[i];
+	}
 }
 
 /* implement a function to display a vector to stdout (printf)
@@ -20,6 +24,10 @@ void scale_vector(double a[], double b[], double scale)
     */
 void display_vector(double a[])
 {
+	int i; //See above comment
+	for(i=0; i<VECTOR_LENGTH; i++) {
+		printf("%6.3f", a[i]);
+	}
 }
 
 int main(int argc, char **argv)
@@ -27,16 +35,13 @@ int main(int argc, char **argv)
     double x[VECTOR_LENGTH];
     double y[VECTOR_LENGTH];
     double scale = 2.0;
-    int i;
 
     x[0] = 1.0;
     x[1] = 2.0;
     x[2] = 3.0;
 
     printf("vector x:");
-    for(i=0; i < VECTOR_LENGTH; i++) {
-        printf("%6.3f", x[i]);
-    }
+    display_vector(x);
     printf("\n");
 
     printf("scaled by %f is:\n", scale);
@@ -44,9 +49,7 @@ int main(int argc, char **argv)
     scale_vector(x, y, scale);
 
     printf("vector y:");
-    for(i=0; i < VECTOR_LENGTH; i++) {
-        printf("%6.3f", y[i]);
-    }
+    display_vector(y);
     printf("\n");
 
     return 0;
