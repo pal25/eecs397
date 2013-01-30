@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 {
 #define EMPTY_SET 0x0000
     
-    uint16_t citrus_set = GRAPEFRUIT | KIWI | LEMON | LIME;
+    uint16_t citrus_set = GRAPEFRUIT | ORANGE | LEMON | LIME | TANGERINE;
     printf("Set representing all citrus fruits: %#x\n", citrus_set);
     
     uint16_t response_1;
