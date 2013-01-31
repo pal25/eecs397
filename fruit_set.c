@@ -2,22 +2,22 @@
 #include <stdio.h>
 
 enum fruits {
-    APPLE = 0x0001,
-    BLACKBERRY = 0x0002,
-    BLUEBERRY = 0x0004,
-    GRAPE = 0x0008,
-    LYCHEE = 0x0010,
-    ORANGE = 0x0020,
-    PEAR = 0x0040,
-    POMEGRANATE = 0x0080,
-    GRAPEFRUIT = 0x0100,
-    KIWI = 0x0200,
-    LEMON = 0x0400,
-    LIME = 0x0800,
-    RASPBERRY = 0x1000,
-    STRAWBERRY = 0x2000,
-    TANGERINE = 0x4000,
-    WATERMELON = 0x8000
+    APPLE=0,
+    BLACKBERRY,
+    BLUEBERRY,
+    GRAPE,
+    LYCHEE,
+    ORANGE,
+    PEAR,
+    POMEGRANATE,
+    GRAPEFRUIT,
+    KIWI,
+    LEMON,
+    LIME,
+    RASPBERRY,
+    STRAWBERRY,
+    TANGERINE,
+    WATERMELON
 };
 
 // return the intersection of sets a and b
@@ -41,26 +41,31 @@ uint16_t set_symmetric_difference(uint16_t a, uint16_t b)
 // return 0 if the member specified is not in the set provided, 1 otherwise
 int is_member(uint16_t set, enum fruits member)
 {
-    return (set & member) != 0;
+    return (set & (1 << member)) != 0;
 }
 
 // add the member provided to the set and return the new set value
 uint16_t add_member(uint16_t set, enum fruits member)
 {
-    return set | member;
+    return set | (1 << member);
 }
 
 // remove the member provided from the set provided and return the new set value
 uint16_t remove_member(uint16_t set, enum fruits member)
 {
-    return set & ~member;
+    return set & (0 << member);
 }
 
 int main(int argc, char **argv)
 {
 #define EMPTY_SET 0x0000
     
-    uint16_t citrus_set = GRAPEFRUIT | ORANGE | LEMON | LIME | TANGERINE;
+    uint16_t citrus_set;
+    citrus_set = add_member( EMPTY_SET, GRAPEFRUIT);
+    citrus_set = add_member( citrus_set, LEMON);
+    citrus_set = add_member( citrus_set, LIME);
+    citrus_set = add_member( citrus_set, ORANGE);
+    citrus_set = add_member( citrus_set, TANGERINE);
     printf("Set representing all citrus fruits: %#x\n", citrus_set);
     
     uint16_t response_1;
