@@ -10,5 +10,5 @@ number_to_word.o: number_to_word.c number_to_word.h
 	gcc -c number_to_word.c
 
 clean:
-	rm -rf *o account
+	rm *.o account
 
