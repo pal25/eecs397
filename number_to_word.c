@@ -22,13 +22,15 @@ void print_words_for_amount(int dollars, int cents)
     } else if(tens > 1) {
 	printf("%s ", map_tens[tens]);
     }
-
+    
     int ones = (dollars % 10);
     if(ones > 0 && tens != 1)
 	printf("%s ", map_0to19[ones]);
 
     if(dollars != 0)
 	printf("and ");
+    else
+	printf("zero and ");
 
     printf("%d/100 dollars\n", cents);
 

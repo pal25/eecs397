@@ -14,9 +14,6 @@ int main(int argc, char **argv)
     printf("634.50 -> "); print_words_for_amount(634, 50);
     printf("789.74 -> "); print_words_for_amount(789, 74);
     printf("900.99 -> "); print_words_for_amount(900, 99);
-    printf("112.00 -> "); print_words_for_amount(112, 0);
-    printf("11.00 -> "); print_words_for_amount(11, 0);
-
 
     return 0;
 }
