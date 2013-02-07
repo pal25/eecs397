@@ -1,3 +1,5 @@
+#include <math.h>
+#include <stdio.h>
 
 double sample_data [] = {
 26.5480105028,
@@ -101,3 +103,58 @@ double sample_data [] = {
 40.2877753837,
 5.6233382791
 };
+
+int num_elements = sizeof(sample_data) / sizeof(sample_data[0]);
+
+double average(double sd[])
+{
+    double sum = 0;
+    for(int i=0; i<num_elements; i++) {
+	sum += sd[i];
+    }
+
+    return (sum / num_elements);
+}
+
+double standard_dev(double sd[])
+{
+    double avg = average(sd);
+    double sum = 0;
+    for(int i=0; i<num_elements; i++) {
+	sum += (sd[i] - avg) * (sd[i] - avg);
+    }
+    sum = sqrt(sum / num_elements);
+    return sum;
+}
+
+double minimum(double sd[])
+{
+    double min = sd[0];
+    for(int i=1; i<num_elements-1; i++) {
+	if(sd[i] < min) {
+	    min = sd[i];
+	}
+    }
+    return min;
+}
+
+double maximum(double sd[])
+{
+    double max = sd[0];
+    for(int i=1; i<num_elements-1; i++) {
+	if(sd[i] > max) {
+	    max = sd[i];
+	}
+    }
+    return max;
+}
+
+int main(int argc, char **argv)
+{
+    printf("Average (Mean) value: %G\n", average(sample_data));
+    printf("Standard Deviation value: %G\n", standard_dev(sample_data));
+    printf("Minimum value: %G\n", minimum(sample_data));
+    printf("Maximum value: %G\n", maximum(sample_data));
+    return 0;
+}
+    
