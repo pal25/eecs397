@@ -121,9 +121,9 @@ double standard_dev(double sd[])
     double avg = average(sd);
     double sum = 0;
     for(int i=0; i<num_elements; i++) {
-	sum += (sd[i] - avg) * (sd[i] - avg);
+	sum += pow((sd[i] - avg),2);
     }
-    sum = sqrt(sum / num_elements);
+    sum = sqrt(sum / (num_elements-1));
     return sum;
 }
 
