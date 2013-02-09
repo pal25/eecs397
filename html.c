@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     printf("    "); close_tag("ul"); printf("\n");
 
     printf("  "); close_tag("p"); printf("\n");
-    printf("  "); close_tag("body"); printf("\n");
+    close_tag("body"); printf("\n");
     close_tag("html"); printf("\n");
 					   
     return 0;
