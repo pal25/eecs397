@@ -1,13 +1,17 @@
+FLAGS = -Wall -Werror -std=c99
+OUTPUT = matrix
+
 all: matrix
 
 matrix: matrix.o matrix_lib.o
-	gcc -std=c99 matrix.o matrix_lib.o -o matrix
+	gcc $(FLAGS) matrix.o matrix_lib.o -o $(OUTPUT) -lm
+	chmod u+x $(OUTPUT)
 
 matrix.o: matrix.c matrix_lib.h
-	gcc -c matrix.c
+	gcc $(FLAGS) -c matrix.c
 
 matrix_lib.o: matrix_lib.c matrix_lib.h
-	gcc -c matrix_lib.c
+	gcc $(FLAGS) -c matrix_lib.c
 
 clean:
-	rm matrix *.o
+	rm $(OUTPUT) *.o

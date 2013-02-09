@@ -1,4 +1,4 @@
-#ifndef
+#ifndef MATRIX_LIB_H
 #define MATRIX_LIB_H
 #define NUM_ROWS 3
 
