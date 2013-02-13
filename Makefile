@@ -1,4 +1,4 @@
-FLAGS = -Wall -Werror -std=c99
+FLAGS = -Wall -Werror -std=gnu99
 OUTPUT = matrix
 
 all: matrix
