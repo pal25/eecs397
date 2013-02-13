@@ -28,17 +28,14 @@ char *my_strncpy(char *dest, const char *src, size_t n)
 
 char *my_strncat(char *dest, const char *src, size_t n)
 {
-    size_t i = 0;
-    while(dest[i] != '\0') {
-	i += 1;
-    }
+    size_t dest_len = my_strlen(dest);
 
     size_t j;
-    for(j = 0; (j < n && src[i] != '\n'); i++) {
-	dest[i+j] = src[j];
+    for(j = 0; (j < n && src[j] != '\n'); j++) {
+	dest[dest_len+j] = src[j];
     }
-    dest[i+j] = '\0';
-
+    
+    dest[dest_len+j] = '\0';
     return dest;
 }
 
@@ -63,8 +60,9 @@ char *my_strstr(const char *src, const char *sub)
 
     for(i=0; i < src_len; i++) {
 	if(src[i] == sub[0]) {
-	    for(j=0; (j < sub_len && sub[j] != src[j]); j++) {
-		break;
+	    for(j=0; j < sub_len; j++) {
+		if(sub[j] != src[j])
+		    break;
 	    }
 
 	    return (char*) &src[i];
