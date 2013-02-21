@@ -58,10 +58,13 @@ char *my_strstr(const char *src, const char *sub)
     size_t src_len = my_strlen(src);
     size_t sub_len = my_strlen(sub);
 
+    if(src_len == 0 && sub_len == 0 && src[0] == sub[0])
+	return (char*) &src[0];
+    
     for(i=0; i < src_len; i++) {
 	if(src[i] == sub[0]) {
-	    for(j=0; j < sub_len; j++) {
-		if(sub[j] != src[j])
+	    for(j=1; j < sub_len && (i+j) < src_len; j++) {
+		if(sub[i+j] != src[j])
 		    break;
 	    }
 
