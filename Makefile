@@ -6,4 +6,4 @@ my_echo: my_echo.c
 	gcc $(CFLAGS) -o my_echo my_echo.c
 
 clean:
-	rm -f *.o my_echo
+	rm -f *~ my_echo
