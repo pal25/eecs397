@@ -21,7 +21,11 @@ int add_kv(dict_t *d, const char *key, const char *value)
 	if(!strncmp(key, d->entries[i].key, strlen(key))) {
 	    strncpy(d->entries[i].value, value, strlen(value));
 	    return 1;
-	} else if(strlen(d->entries[i].key) == 0) {
+	}
+    }
+
+    for(int i=0;i<MAX_ENTRIES;i++) {
+	if(strlen(d->entries[i].key) == 0) {
 	    strncpy(d->entries[i].value, value, strlen(value));
 	    strncpy(d->entries[i].key, key, strlen(key));
 	    return 1;
