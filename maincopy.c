@@ -1,17 +1,15 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #define BUFFER_SIZE 1024
 
-char* getfilename()
+void getfilename(char* buffer)
 {
-    char buffer[BUFFER_SIZE]; 
-    sprintf(buffer, "s", __FILENAME__);
+    sprintf(buffer, "%s", __FILE__);
 
     char* filename = strstr(buffer, ".");
     memcpy(filename, "\0", strlen(filename));
-
-    return buffer;
 }
 
 FILE* checked_fopen(char* filename, char* perm)
@@ -27,9 +25,8 @@ FILE* checked_fopen(char* filename, char* perm)
 
 void write_new(FILE* old, FILE* new)
 {
-    char buffer;
-    int i = 0;
-    while((buffer = getc(old[i++])) != EOF)
+    int buffer;
+    while((buffer = getc(old)) != EOF)
 	putc(buffer, new);
 
     fclose(old);
@@ -38,13 +35,12 @@ void write_new(FILE* old, FILE* new)
 
 int main(int argc, char** argv)
 {
-    char* filename = getfilename();
+    char filename[BUFFER_SIZE];
+    getfilename(filename);
 
     char buffer[BUFFER_SIZE];
     sprintf(buffer, "%s.c", filename);
     FILE* old = checked_fopen(filename, "r");
-
-    char buffer[BUFFER_SIZE];
     sprintf(buffer, "%sN.c", filename);
     FILE* new = checked_fopen(filename, "w");
 
