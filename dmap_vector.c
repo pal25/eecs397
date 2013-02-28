@@ -1,14 +1,15 @@
-#include "dmap_vector.c"
+#include <stdio.h>
+#include "dmap_vector.h"
 
 void double_vector_display(double *d, int length)
 {
     int i=0;
     for(i=0; i<length; i++) {
-	printf("%s\n", d[i]);
+	printf("%f\n", d[i]);
     }
 }
 
-void *double_vector_map(double *d, int length, double (*f)(double))
+void double_vector_map(double *d, int length, double (*f)(double))
 {
     int i;
     for(i=0; i<length; i++) {
