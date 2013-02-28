@@ -40,9 +40,9 @@ int main(int argc, char** argv)
 
     char buffer[BUFFER_SIZE];
     sprintf(buffer, "%s.c", filename);
-    FILE* old = checked_fopen(filename, "r");
+    FILE* old = checked_fopen(buffer, "r");
     sprintf(buffer, "%sN.c", filename);
-    FILE* new = checked_fopen(filename, "w");
+    FILE* new = checked_fopen(buffer, "w");
 
     write_new(old, new);
     
