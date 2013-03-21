@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Werror -std=gnu99
+CFLAGS = -Wall -Werror -g -std=gnu99
 
 all: main
 
