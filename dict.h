@@ -9,10 +9,12 @@ typedef struct {
   struct list_head list;
 }dict_entry;
 
-dict_entry *alloc_dict(void);
+dict_entry* alloc_dict(void);
 void free_dict(dict_entry *d);
 int add_kv(dict_entry *d,  char *key,  char *value);
 void remove_kv(dict_entry *d,  char *key);
 int lookup_kv(dict_entry *d,  char *key, char *value);
+dict_entry* sort_dict(dict_entry* d);
+void print_dict(dict_entry* d);
 
 #endif
