@@ -64,15 +64,17 @@ dict_entry* readToDict(FILE* input)
 {
     dict_entry* dict = alloc_dict();
     
-    char linebuffer[BUFFER_SIZE];
+    char* linebuffer = NULL;
+    size_t len = 0;
+    
     char newbuffer[BUFFER_SIZE];
     char oldbuffer[BUFFER_SIZE];
+
     char* token;
     char* delims = " ";
     int in_dict;
 
-    while(!feof(input)) {
-	fgets(linebuffer, BUFFER_SIZE, input);
+    while(getline(&linebuffer, &len, input) != -1) {
 	filterString(linebuffer);
 	token = strtok(linebuffer, delims);
 	while(token != NULL) {
@@ -96,14 +98,16 @@ int main(int argc, char** argv)
 {
     FILE* input;
 
-    if(argc != 3 || !(strcmp(argv[1], "-f") == 0)) {
-	printf("USAGE: ./freq -f filename\n");
-	exit(EXIT_FAILURE);
-    } else {
+    if(argc == 1) {
+	input = stdin;
+    } else if(!(strcmp(argv[1], "-f") == 0)) {
 	if((input = fopen(argv[2], "r")) == NULL) {
 	    printf("Cannot open file: %s\n", argv[2]);
 	    exit(EXIT_FAILURE);
 	}
+    } else {
+	printf("USAGE: ./freq -f filename\n");
+	exit(EXIT_FAILURE);
     }
 
     dict_entry* dict = readToDict(input);
