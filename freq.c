@@ -96,12 +96,12 @@ int main(int argc, char** argv)
 {
     FILE* input;
 
-    if(argc != 2) {
-	printf("USAGE: ./freq filename\n");
+    if(argc != 3 || !(strcmp(argv[1], "-f") == 0)) {
+	printf("USAGE: ./freq -f filename\n");
 	exit(EXIT_FAILURE);
     } else {
-	if((input = fopen(argv[1], "r")) == NULL) {
-	    printf("Cannot open file: %s\n", argv[1]);
+	if((input = fopen(argv[2], "r")) == NULL) {
+	    printf("Cannot open file: %s\n", argv[2]);
 	    exit(EXIT_FAILURE);
 	}
     }
