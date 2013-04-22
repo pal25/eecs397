@@ -1,16 +1,17 @@
-CFLAGS = -Wall -Werror -g -std=gnu99
+CFLAGS = -Wall -Werror -std=gnu99 -I/usr/include/ -L/usr/lib/
+LIBS = -lzmq
 
-all: freq
+all: publish
 
-valgrind: freq
-	valgrind --tool=memcheck --leak-check=yes ./freq
+publish: publish.c helper.c
+	gcc $(CFLAGS) -o publish publish.c helper.c $(LIBS)
 
-freq: freq.o dict.o
-	gcc $(CFLAGS) dict.o freq.c -o freq
+subscribe: subscribe.c helper.c
+	gcc $(CFLAGS) -o subscribe subscribe.c helper.c $(LIBS)
 
-dict.o: dict.c	
-	gcc $(CFLAGS) -c dict.c
+helper.o: helper.c helper.h
+	gcc $(CFLAGS) -c helper.c
 
 clean:
-	rm *.o freq
+	rm -f *.o publish subscribe
 
