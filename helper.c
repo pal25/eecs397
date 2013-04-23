@@ -1,5 +1,5 @@
 #include <zmq.h>
-
+#include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,29 +10,31 @@
 //  Receive 0MQ string from socket and convert into C string
 //  Caller must free returned string. Returns NULL if the context
 //  is being terminated.
-char* s_recv (void* socket) {
+void s_recv (void* socket, char* payload) {
     zmq_msg_t* msg = (zmq_msg_t*)malloc(sizeof(zmq_msg_t));
     checked_msg_init(msg);
 
     if(zmq_recv(socket, msg, 0) == -1) {
 	exit(EXIT_FAILURE);
     }
-    
-    char* msg_data = strdup((char*)zmq_msg_data(msg));
-    zmq_msg_close(msg);
-    return msg_data;
+    strcpy(payload, zmq_msg_data(msg));
+    return;
 }
 
 //  Convert C string to 0MQ string and send to socket
-int s_send (void* socket, char* buffer) {
+int s_send (void* socket, json_t* payload) {
     zmq_msg_t* msg = (zmq_msg_t*)malloc(sizeof(zmq_msg_t));
     checked_msg_init(msg);
-    checked_msg_data(msg, buffer);
+    
+    char* data = json_dumps(payload, 0);
+    checked_msg_data(msg, data);
+    free(data);
     
     int size = zmq_send (socket, msg, 0);
     return size;
 }
 
+// Check for errors in initing the data struct
 void checked_msg_init(zmq_msg_t* msg)
 {
     if(zmq_msg_init(msg) == -1) {
@@ -43,14 +45,17 @@ void checked_msg_init(zmq_msg_t* msg)
     return;
 }
 
-void checked_msg_data(zmq_msg_t* msg, char* buffer)
+// Check for erros in setting up messages
+void checked_msg_data(zmq_msg_t* msg, char* payload)
 {
-    if(zmq_msg_init_size(msg, strlen(buffer)) == -1) {
+    if(zmq_msg_init_size(msg, sizeof(char)*strlen(payload)) == -1) {
 	    perror("Error setting zmq_msg data");
 	    exit(EXIT_FAILURE);
     }
+    
+    strcpy(zmq_msg_data(msg), payload);
 
-    memcpy(zmq_msg_data(msg), buffer, strlen(buffer));
+    printf("zmq_msg_data: %s\n",  (char*)zmq_msg_data(msg));
     return;
 }
  
@@ -62,6 +67,5 @@ void s_sleep (int msecs)
     t.tv_nsec = (msecs % 1000) * 1000000;
     nanosleep (&t, NULL);
 }
-
 
 

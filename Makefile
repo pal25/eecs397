@@ -1,7 +1,7 @@
-CFLAGS = -Wall -Werror -std=gnu99 -I/usr/include/ -L/usr/lib/
-LIBS = -lzmq
+CFLAGS = -Wall -Werror -std=gnu99 -g -I/usr/include/ -L/usr/lib/
+LIBS = -lzmq -ljansson
 
-all: publish
+all: publish subscribe
 
 publish: publish.c helper.c
 	gcc $(CFLAGS) -o publish publish.c helper.c $(LIBS)

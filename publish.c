@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "helper.h"
 
 int main(int argc, char** argv)
@@ -10,18 +11,25 @@ int main(int argc, char** argv)
     char addr[32];
     sprintf(addr, "tcp://*:%d", PORT_NUM);
 
-    int rc = zmq_bind(publisher, addr);
-    if(rc != 0)
+    if(zmq_bind(publisher, addr) == -1) {
+	perror("Failed to bind publisher");
 	exit(EXIT_FAILURE);
+    } else {
+	printf("Bound to %s\n", addr);
+    }
+
+    srand(time(NULL));
 
     int running = 1;
     while(running) {
-	int count = 0;
-	char buffer[256];
-	sprintf(buffer, "%d", count);
-	s_send(publisher, buffer);
+	json_t* payload = json_object();
+	payload = json_object();
+	json_object_set_new(payload, "Timestamp", json_integer((int) time(NULL)));
+	json_object_set_new(payload, "Value A", json_real((float) (2*(random()/(float)RAND_MAX)-1)));
+	s_send(publisher, payload);
+	s_sleep(2000);
     }
-
+    
     zmq_close(publisher);
     zmq_term(context);
     return 0;
